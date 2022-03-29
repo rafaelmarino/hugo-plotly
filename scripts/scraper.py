@@ -9,8 +9,7 @@ url = "https://fiaresultsandstatistics.motorsportstats.com/results/2021-abu-dhab
 r = requests.get(url)
 print(r.status_code)
 print(r.encoding)  # UTF-8
-print(sys.getsizeof(r))
-
+print(sys.getsizeof(r) / 1024)  # 0.04kb
 #  r.text
 
 
@@ -39,3 +38,4 @@ df = pd.DataFrame(all_points).transpose()
 df.columns = colnames
 df.index = idx
 df = df.cumsum(axis=1)
+# df.to_csv("data/wdc_points2.csv")
