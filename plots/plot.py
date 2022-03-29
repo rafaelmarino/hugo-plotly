@@ -1,4 +1,3 @@
-from turtle import title
 import plotly.express as px
 
 # from plotly.io import write_image
@@ -19,20 +18,31 @@ fig.update_xaxes(
     gridwidth=1,
     gridcolor="#233141",
     color="white",
+    title=dict(
+        text="Year",
+        font=dict(family="Ubuntu", size=18, color="white"),
+    ),
+    tickfont=dict(family="Ubuntu", size=16, color="white"),
 )
 fig.update_yaxes(
     showgrid=True,
     gridwidth=1,
     gridcolor="#233141",
     color="white",
+    title=dict(
+        text="Life Expectancy",
+        font=dict(family="Ubuntu", size=18, color="white"),
+    ),
+    tickfont=dict(family="Ubuntu", size=16, color="white"),
 )
 fig.update_layout(
     paper_bgcolor="#0e1317",
     plot_bgcolor="#0e1317",
     title=dict(
-        text="Life Expectancy 1952–2007",
-        font=dict(family="Ubuntu", size=18, color="white"),
+        text="Life Expectancy 1952–2007 🇪🇸",
+        font=dict(family="Ubuntu", size=20, color="white"),
     ),
 )
 # fig.show()
 fig.write_image("newplot.png")
+# fig.write_json("newplot.json")
