@@ -1,5 +1,6 @@
 import plotly.graph_objects as go
 import pandas as pd
+import plotly.express as px
 
 # import datetime
 # import numpy as np
@@ -30,10 +31,12 @@ def plot_heatmap(df):
     drivers = df.index
     # drivers = df.iloc[:10].index
     # tracks = df.columns
-    fig = go.Figure(
-        data=go.Heatmap(z=df, x=flags, y=drivers, colorscale="Viridis"),
-        # labels=dict(color="Points"),
-    )
+    # fig = go.Figure(
+    #     data=go.Heatmap(z=df, x=flags, y=drivers, colorscale="Viridis"),
+    #     # labels=dict(color="Points"),
+    #     text_auto=True,
+    # )
+    fig = px.imshow(df, text_auto=True, aspect="auto", color_continuous_scale="Viridis")
     fig.update_xaxes(
         title=dict(
             text="",
@@ -68,6 +71,6 @@ def plot_heatmap(df):
 if __name__ == "__main__":
     df = pd.read_csv("data/wdc_points1.csv", index_col=0)
     fig = plot_heatmap(df)
-    fig.write_image("plots/png/heatmap.png")
-    fig.write_json("plots/json/heatmap.json")
+    fig.write_image("plots/png/heatmap2.png")
+    fig.write_json("plots/json/heatmap2.json")
 # fig.show()
