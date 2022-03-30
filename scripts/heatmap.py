@@ -25,10 +25,10 @@ import plotly.express as px
 def plot_heatmap(df):
     """Plot heatmap of scored points for F1 WDC 2021"""
     flags1 = ["🇧🇭", "🇮🇹", "🇵🇹", "🇪🇸", "🇲🇨", "🇦🇿", "🇫🇷", "🇦🇹"]
-    flags2 = ["🇦🇹x2", "🇬🇧", "🇭🇺", "🇧🇪", "🇳🇱", "🇮🇹x2", "🇷🇺", "🇹🇷"]
+    flags2 = ["🇦🇹", "🇬🇧", "🇭🇺", "🇧🇪", "🇳🇱", "🇮🇹", "🇷🇺", "🇹🇷"]
     flags3 = ["🇺🇸", "🇲🇽", "🇧🇷", "🇶🇦", "🇸🇦", "🇦🇪"]
     flags = flags1 + flags2 + flags3
-    drivers = df.index
+    # drivers = df.index
     # drivers = df.iloc[:10].index
     # tracks = df.columns
     # fig = go.Figure(
@@ -36,13 +36,19 @@ def plot_heatmap(df):
     #     # labels=dict(color="Points"),
     #     text_auto=True,
     # )
-    fig = px.imshow(df, text_auto=True, aspect="auto", color_continuous_scale="Viridis")
+    fig = px.imshow(
+        df,
+        x=[" ".join(z) for z in zip(df.columns, flags)],
+        text_auto=True,
+        aspect="auto",
+        color_continuous_scale="Viridis",
+    )
     fig.update_xaxes(
         title=dict(
             text="",
             font=dict(family="Ubuntu", size=18, color="white"),
         ),
-        tickfont=dict(family="Ubuntu", size=18, color="white"),
+        tickfont=dict(family="Ubuntu", size=16, color="white"),
         tickangle=90,
         side="bottom",
     )
@@ -55,7 +61,7 @@ def plot_heatmap(df):
         plot_bgcolor="#0e1317",
         title=dict(
             text="F1 World Driver's Championship 2021 \u2013 Scored Points Heatmap",
-            font=dict(family="Ubuntu", size=20, color="white"),
+            font=dict(family="Ubuntu", size=22, color="white"),
             xanchor="center",
             x=0.5,
         ),

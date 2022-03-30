@@ -12,6 +12,10 @@ def plot_wdc(df, title_type="full"):
     fig = go.Figure()
     # Add traces
     for driver in df.index:
+        if title_type == "full":
+            vis = "legendonly" if driver not in df.iloc[:10].index else None
+        else:
+            vis = None
         fig.add_trace(
             go.Scatter(
                 x=[" ".join(z) for z in zip(df.columns, flags)],
@@ -23,6 +27,7 @@ def plot_wdc(df, title_type="full"):
                 #     size=5,
                 #     line=dict(width=2),
                 # ),
+                visible=vis,
             )
         )
     fig.update_xaxes(
@@ -53,13 +58,13 @@ def plot_wdc(df, title_type="full"):
     elif title_type == "top10":
         title_text = "F1 World Drivers' Championship 2021 (Top10)"
     elif title_type == "rest":
-        title_text = "F1 World Drivers' Championship 2021 (Pos11+)"
+        title_text = "F1 World Drivers' Championship 2021 (Positions 11+)"
     fig.update_layout(
         paper_bgcolor="#0e1317",
         plot_bgcolor="#0e1317",
         title=dict(
             text=title_text,
-            font=dict(family="Ubuntu", size=20, color="white"),
+            font=dict(family="Ubuntu", size=22, color="white"),
             xanchor="center",
             x=0.5,
         ),
@@ -77,9 +82,9 @@ if __name__ == "__main__":
     fig.write_image("plots/png/f1wdc2021.png")
     fig.write_json("plots/json/f1wdc2021.json")
     # top 10 drivers
-    fig = plot_wdc(df.iloc[:10], title_type="top10")
-    fig.write_image("plots/png/f1wdc2021-top10.png")
-    fig.write_json("plots/json/f1wdc2021-top10.json")
+    # fig = plot_wdc(df.iloc[:10], title_type="top10")
+    # fig.write_image("plots/png/f1wdc2021-top10.png")
+    # fig.write_json("plots/json/f1wdc2021-top10.json")
     # rest
     fig = plot_wdc(df.iloc[10:], title_type="rest")
     fig.write_image("plots/png/f1wdc2021-rest.png")
