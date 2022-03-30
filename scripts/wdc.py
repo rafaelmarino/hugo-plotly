@@ -5,7 +5,7 @@ import pandas as pd
 def plot_wdc(df, title_type="full"):
     """Create a plotly chart of cumulative points for F1WDC"""
     flags1 = ["🇧🇭", "🇮🇹", "🇵🇹", "🇪🇸", "🇲🇨", "🇦🇿", "🇫🇷", "🇦🇹"]
-    flags2 = ["🇦🇹2 ", "🇬🇧", "🇭🇺", "🇧🇪", "🇳🇱", "🇮🇹2 ", "🇷🇺", "🇹🇷"]
+    flags2 = ["🇦🇹x2", "🇬🇧", "🇭🇺", "🇧🇪", "🇳🇱", "🇮🇹x2", "🇷🇺", "🇹🇷"]
     flags3 = ["🇺🇸", "🇲🇽", "🇧🇷", "🇶🇦", "🇸🇦", "🇦🇪"]
     flags = flags1 + flags2 + flags3
 
@@ -34,8 +34,8 @@ def plot_wdc(df, title_type="full"):
             text="",
             font=dict(family="Ubuntu", size=18, color="white"),
         ),
-        tickfont=dict(family="Ubuntu", size=16, color="white"),
-        tickangle=0,
+        tickfont=dict(family="Ubuntu", size=18, color="white"),
+        tickangle=90,
     )
     fig.update_yaxes(
         showgrid=True,
@@ -51,9 +51,9 @@ def plot_wdc(df, title_type="full"):
     if title_type == "full":
         title_text = "🏁 F1 World Drivers' Championship 2021 🏁"
     elif title_type == "top10":
-        title_text = "F1 World Drivers' Championship 2021 (Top10) 🏁"
+        title_text = "F1 World Drivers' Championship 2021 (Top10)"
     elif title_type == "rest":
-        title_text = "F1 World Drivers' Championship 2021 (Pos11+) 🏁"
+        title_text = "F1 World Drivers' Championship 2021 (Pos11+)"
     fig.update_layout(
         paper_bgcolor="#0e1317",
         plot_bgcolor="#0e1317",
@@ -64,23 +64,23 @@ def plot_wdc(df, title_type="full"):
             x=0.5,
         ),
         legend=dict(
-            font=dict(family="Sans", size=11, color="white"),
+            font=dict(family="Sans", size=14, color="white"),
         ),
     )
     return fig
 
 
 if __name__ == "__main__":
-    df = pd.read_csv("data/wdc_points.csv", index_col=0)
+    df = pd.read_csv("data/wdc_points2.csv", index_col=0)
     # all drivers
     fig = plot_wdc(df)
-    fig.write_image("plots/f1wdc2021.png")
-    fig.write_json("plots/f1wdc2021.json")
+    fig.write_image("plots/json/f1wdc2021.png")
+    fig.write_json("plots/json/f1wdc2021.json")
     # top 10 drivers
     fig = plot_wdc(df.iloc[:10], title_type="top10")
-    fig.write_image("plots/f1wdc2021-top10.png")
-    fig.write_json("plots/f1wdc2021-top10.json")
+    fig.write_image("plots/json/f1wdc2021-top10.png")
+    fig.write_json("plots/json/f1wdc2021-top10.json")
     # rest
     fig = plot_wdc(df.iloc[10:], title_type="rest")
-    fig.write_image("plots/f1wdc2021-rest.png")
-    fig.write_json("plots/f1wdc2021-rest.json")
+    fig.write_image("plots/json/f1wdc2021-rest.png")
+    fig.write_json("plots/json/f1wdc2021-rest.json")
