@@ -5,7 +5,7 @@ import pandas as pd
 def plot_wdc(df, title_type="full"):
     """Create a plotly chart of cumulative points for F1WDC"""
     flags1 = ["🇧🇭", "🇮🇹", "🇵🇹", "🇪🇸", "🇲🇨", "🇦🇿", "🇫🇷", "🇦🇹"]
-    flags2 = ["🇦🇹x2", "🇬🇧", "🇭🇺", "🇧🇪", "🇳🇱", "🇮🇹x2", "🇷🇺", "🇹🇷"]
+    flags2 = ["🇦🇹", "🇬🇧", "🇭🇺", "🇧🇪", "🇳🇱", "🇮🇹", "🇷🇺", "🇹🇷"]
     flags3 = ["🇺🇸", "🇲🇽", "🇧🇷", "🇶🇦", "🇸🇦", "🇦🇪"]
     flags = flags1 + flags2 + flags3
 
@@ -14,7 +14,7 @@ def plot_wdc(df, title_type="full"):
     for driver in df.index:
         fig.add_trace(
             go.Scatter(
-                x=flags,
+                x=[" ".join(z) for z in zip(df.columns, flags)],
                 y=df.loc[driver],
                 mode="lines+markers",
                 name=driver,
@@ -34,7 +34,7 @@ def plot_wdc(df, title_type="full"):
             text="",
             font=dict(family="Ubuntu", size=18, color="white"),
         ),
-        tickfont=dict(family="Ubuntu", size=18, color="white"),
+        tickfont=dict(family="Ubuntu", size=16, color="white"),
         tickangle=90,
     )
     fig.update_yaxes(
@@ -74,13 +74,13 @@ if __name__ == "__main__":
     df = pd.read_csv("data/wdc_points2.csv", index_col=0)
     # all drivers
     fig = plot_wdc(df)
-    fig.write_image("plots/json/f1wdc2021.png")
+    fig.write_image("plots/png/f1wdc2021.png")
     fig.write_json("plots/json/f1wdc2021.json")
     # top 10 drivers
     fig = plot_wdc(df.iloc[:10], title_type="top10")
-    fig.write_image("plots/json/f1wdc2021-top10.png")
+    fig.write_image("plots/png/f1wdc2021-top10.png")
     fig.write_json("plots/json/f1wdc2021-top10.json")
     # rest
     fig = plot_wdc(df.iloc[10:], title_type="rest")
-    fig.write_image("plots/json/f1wdc2021-rest.png")
+    fig.write_image("plots/png/f1wdc2021-rest.png")
     fig.write_json("plots/json/f1wdc2021-rest.json")
