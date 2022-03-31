@@ -1,13 +1,11 @@
 import plotly.graph_objects as go
 import pandas as pd
+import json
 
 
 def plot_wdc(df, title_type="full"):
     """Create a plotly chart of cumulative points for F1WDC"""
-    flags1 = ["🇧🇭", "🇮🇹", "🇵🇹", "🇪🇸", "🇲🇨", "🇦🇿", "🇫🇷", "🇦🇹"]
-    flags2 = ["🇦🇹", "🇬🇧", "🇭🇺", "🇧🇪", "🇳🇱", "🇮🇹", "🇷🇺", "🇹🇷"]
-    flags3 = ["🇺🇸", "🇲🇽", "🇧🇷", "🇶🇦", "🇸🇦", "🇦🇪"]
-    flags = flags1 + flags2 + flags3
+    flags = json.load(open("data/flags.json", "r"))["flags"]
 
     fig = go.Figure()
     # Add traces

@@ -1,12 +1,13 @@
 import plotly.graph_objects as go
 import pandas as pd
 import plotly.express as px
+import json
+
 
 # import datetime
 # import numpy as np
 
-
-# demo
+# demo1
 # np.random.seed(1)
 # programmers = ["Alex", "Nicole", "Sara", "Etienne", "Chelsea", "Jody", "Marianne"]
 # base = datetime.datetime.today()
@@ -21,24 +22,35 @@ import plotly.express as px
 # fig.update_layout(font=dict(color="white"))
 # fig.write_image("plots/heatmap_github.png")
 
-# f1 wdc 2021 (raw dataset)
+# demo2
+# fig = go.Figure(
+#     data=go.Heatmap(
+#         z=[[1, 20, 30], [20, 1, 60], [30, 60, 1]],
+#         text=[
+#             ["one", "twenty", "thirty"],
+#             ["twenty", "one", "sixty"],
+#             ["thirty", "sixty", "one"],
+#         ],
+#         texttemplate="%{text}",
+#         textfont={"size": 20},
+#     )
+# )
+
+
 def plot_heatmap(df):
-    """Plot heatmap of scored points for F1 WDC 2021"""
-    flags1 = ["🇧🇭", "🇮🇹", "🇵🇹", "🇪🇸", "🇲🇨", "🇦🇿", "🇫🇷", "🇦🇹"]
-    flags2 = ["🇦🇹", "🇬🇧", "🇭🇺", "🇧🇪", "🇳🇱", "🇮🇹", "🇷🇺", "🇹🇷"]
-    flags3 = ["🇺🇸", "🇲🇽", "🇧🇷", "🇶🇦", "🇸🇦", "🇦🇪"]
-    flags = flags1 + flags2 + flags3
-    # drivers = df.index
-    # drivers = df.iloc[:10].index
-    # tracks = df.columns
+    """Plot heatmap of raw scored points for F1 WDC 2021"""
     # fig = go.Figure(
     #     data=go.Heatmap(z=df, x=flags, y=drivers, colorscale="Viridis"),
     #     # labels=dict(color="Points"),
     #     text_auto=True,
     # )
+    flags = json.load(open("data/flags.json", "r"))["flags"]
+    x_axis = [" ".join(z) for z in zip(df.columns, flags)]
+    # print(x_axis)
     fig = px.imshow(
         df,
-        x=[" ".join(z) for z in zip(df.columns, flags)],
+        x=x_axis,
+        labels=dict(x="Grand Prix", y="Driver", color="Points"),
         text_auto=True,
         aspect="auto",
         color_continuous_scale="Viridis",
@@ -53,7 +65,8 @@ def plot_heatmap(df):
         side="bottom",
     )
     fig.update_yaxes(
-        tickfont=dict(family="Ubuntu", size=14, color="white"),
+        title=dict(text=""),
+        tickfont=dict(family="Ubuntu", size=16, color="white"),
         autorange="reversed",
     )
     fig.update_layout(
@@ -78,5 +91,7 @@ if __name__ == "__main__":
     df = pd.read_csv("data/wdc_points1.csv", index_col=0)
     fig = plot_heatmap(df)
     fig.write_image("plots/png/heatmap2.png")
-    fig.write_json("plots/json/heatmap2.json")
-# fig.show()
+    # fig.write_html("plots/html/heatmap.html")
+    # fig.write_json("plots/json/heatmap2.json")
+    fig.write_json(json.load(open("data/paths.json", "r"))["heatmap2path"])
+    # fig.show()
